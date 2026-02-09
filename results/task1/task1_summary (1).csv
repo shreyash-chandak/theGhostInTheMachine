@@ -1,0 +1,4 @@
+Class,Samples,STTR_mean,STTR_std,Hapax,FK_Grade,TreeDepth,AdjToNounRatio,Semicolons,Commas
+human,1926,0.7130,0.0444,959.19,14.10,7.76,0.46,1.35,8.00
+ai_neutral,500,0.7878,0.0417,725.25,16.23,6.94,0.47,0.55,7.71
+ai_mimicked,500,0.7539,0.0360,904.65,14.80,7.79,0.43,0.22,10.86
