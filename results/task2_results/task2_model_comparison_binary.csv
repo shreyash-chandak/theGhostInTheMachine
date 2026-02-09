@@ -1,0 +1,4 @@
+Model,Accuracy,F1-Score (Macro),Precision (Macro)
+Tier A: XGBoost,0.9289,0.9157,0.9272
+Tier B: FeedForward NN,1.0,1.0,1.0
+Tier C: DistilBERT + LoRA,0.9733,0.9691,0.9691
