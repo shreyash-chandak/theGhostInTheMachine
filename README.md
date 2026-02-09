@@ -1,18 +1,15 @@
-This `README.md` is designed to be the professional landing page for your research project. It synthesizes your technical implementations, your "messy research" insights (like the Gemma reasoning loss), and the final adversarial findings.
+
+# The Ghost In The Machine
+
+### Precog Recruitment 2026 | NLP Task
+
+This repository contains the complete implementation of the Precog 2026 NLP recruitment task. The project explores the evolving boundary between human-written Victorian literature (Jane Austen and Charles Dickens), AI-generated mimicry and regular AI-generated text.
 
 ---
 
-# The Detective and The Turing Test: Adversarial Stylometry
+## Project Overview
 
-### Precog Research Group Recruitment 2026 | NLP Theme
-
-This repository contains the complete implementation of the Precog 2026 NLP recruitment tasks. The project explores the evolving boundary between human-written Victorian literature (Jane Austen and Charles Dickens) and AI-generated mimicry. It moves from baseline statistical detection to deep learning interpretability and adversarial bypass techniques.
-
----
-
-## 🚀 Project Overview
-
-The core of this project is a **Multi-Tiered Detection System** designed to identify three classes of text:
+The core of this project is a Detection System designed to identify three classes of text:
 
 1. **Human**: Original prose from Austen and Dickens.
 2. **AI Neutral**: Standard LLM-generated text on Victorian topics.
@@ -20,110 +17,55 @@ The core of this project is a **Multi-Tiered Detection System** designed to iden
 
 ---
 
-## 🛠️ Installation & Setup
+## Tasks Completed
 
-### Prerequisites
+### Task 0: The Library Of Babel
 
-* Python 3.9+
-* Google Colab (recommended for GPU-accelerated Tier C) or a local machine with an NVIDIA GPU.
+### Task 1: The Fingerprint
 
-### Dependencies
-
-```bash
-pip install pandas numpy xgboost scikit-learn torch spacy textstat nltk gensim transformers peft accelerate datasets captum joblib
-python -m spacy download en_core_web_sm
-
-```
-
-### Resource Requirements
-
-* **GloVe Embeddings**: The scripts automatically download `glove-wiki-gigaword-100` via the `gensim` API.
-* **Google Drive**: If running on Colab, ensure your `MODEL_DIR` path is set to save/load `.pkl`, `.pt`, and LoRA adapters.
-
----
-
-## 📂 Tasks Completed
-
-### Task 0: Generation of Dataset
-
-* **Process**: Shifted from Gemini 1.5 Flash (due to rate limits) to **Gemma 3 27B**.
-* **Insights**: Overcame "Reasoning Loss" in Gemma by implementing **Topic-Cycling** and concise prompting to reduce duplicates from ~180 to <5.
-* **Sanitization**: Removed all direct speech (dialogue) from human texts to ensure the models focused on prose rhythm rather than Victorian punctuation cues.
-
-### Task 1: The Detective - Statistical
-
-* Extracted features: TTR, Hapax Legomena, POS Ratios, Tree Depth, and Flesch-Kincaid.
-* **The Complexity Paradox**: Discovered that AI text often yields higher complexity scores (TTR/Tree Depth) than human text because LLMs generate high-density individual paragraphs, whereas human prose flows with varied coherence.
-
-### Task 2: Multi-Tiered Classification
-
-* **Tier A (XGBoost)**: Baseline detection using Task 1 features.
-* **Tier B (FFNN)**: Neural Network using weighted GloVe embeddings.
-* **Tier C (Transformer)**: DistilBERT fine-tuned with **LoRA** (Low-Rank Adaptation).
-* **Binary Track**: Implemented a parallel "Shadow Binary" classifier to compare 3-way forensic accuracy against standard Human vs. AI detection.
+### Task 2: The Multi-Tiered Detective
 
 ### Task 3: The Smoking Gun
 
-* **Interpretability**: Used **Captum (Layer Integrated Gradients)** to generate word-level saliency maps.
-* **Findings**: Identified "AI-isms" (*tapestry, delve, testament*) as high-attribution features for the Transformer.
-* **Error Analysis**: Documented cases where the "over-correcting" of AI mimicry (using too many archaic words) actually helped the detector flag the text as synthetic.
-
 ### Task 4: The Turing Test
 
-* **The Humanizer**: An adversarial pipeline that replaces AI-isms with synonyms and injects "bursty" sentence rhythms.
-* **Genetic Algorithm**: Implemented a GA where the fitness function is the "Human" probability score. Successfully evolved AI paragraphs to achieve **>90% Human confidence**.
-
 ---
 
-## 📖 Execution Instructions
+## Details & Execution Instructions
 
-Each task is contained in a standalone Jupyter Notebook. Follow this sequence:
+Each task is contained in a standalone Jupyter Notebook.
 
-1. **`task1_statistical_detective.ipynb`**:
-* Load your raw CSV.
-* Run the feature extraction cell (Note: takes ~10-15 mins for 1500 rows).
-* Generates `task1_features.csv`.
+1. **`task0.ipynb`**:
+* Gemini API Key must be uploaded to colab secrets as `GEMINI_API_KEY`
+* This generates the dataset (~1500 samples). 
+* I accidentally cleared the cell outputs after downloading the dataset, that is why the cell outputs are empty.
+* It takes ~2 hours to generate (scraping 500 human samples, generating 1000 AI generated samples using repeated gemini API calls)
+* The generated datasets can be found in `/datasets`
+* `/datasets/complete_dataset.csv` is the one used for the task here on.
 
-
-2. **`task2_multi_tiered_detective.ipynb`**:
-* Loads features from Task 1.
-* Trains and saves all three models to your `MODEL_DIR`.
-
-
-3. **`task3_smoking_gun.ipynb`**:
-* Loads the Tier C model.
-* Run the attribution cells to visualize "AI-isms" in red/green.
+2. **`task1.ipynb`**:
+* To run this, all the files in `datasets/` need to uploaded to colab session storage.
+* In case there are errors in the `pip install` or `import` cells, restart the session and run again.
+* In case a line of code loading a file from Google drive, comment the line out and use `pd.read_csv(filename)`. Similarly in case of saving to Google Drive, use `<name>.to_csv()` instead.
 
 
-4. **`task4_adversarial_mirror.ipynb`**:
-* Contains the Genetic Algorithm.
-* Requires an active connection to an LLM API (or manual input) for the "Mutation" step.
+3. **`task2_tertiary.ipynb`** and **`task2_binary.ipynb`**:
+* The tertiary model classifies into Human/AI_Neutral/AI_Mimicked. The binary model does Human/AI
+* To run these, `/datasets/complete_dataset.csv` and `results/task1_results/task1_results.csv` needs to be uploaded to colab session storage. Additionally, `external_datasets/your_dataset_5000.csv` needs to be uploaded for an external test (not needed as per task requirements)
+* In case there are errors in the `pip install` or `import` cells, restart the session and run again.
+* In case a line of code loading a file from Google drive, comment the line out and use `pd.read_csv(filename)`. Similarly in case of saving to Google Drive, use `<name>.to_csv()` instead.
 
+4. **`task3_tertiary.ipynb`** and **`task3_binary.ipynb`**:
+* Since the task document asks to analyse the best performing model, I made two notebooks since I found ffnn to be better for binary classification and distilbert to be better for three way.
+* `/datasets/complete_dataset.csv` has to be uploaded to colab session storage.
+* Both scripts require the model from task2 to be uploaded: `/models/tierC_transformer_tertiary` and `models/tierB_embedding_nn_binary.pt` respectively.
+* `results/task2_results/task2_forensic_results_tertiary.csv` as well for `task3_tertiary.ipynb`.
+* In case there are errors in the `pip install` or `import` cells, restart the session and run again.
+* In case a line of code loading a file from Google drive, comment the line out and use `pd.read_csv(filename)`. Similarly in case of saving to Google Drive, use `<name>.to_csv()` instead.
 
-
+5. **`task4.ipynb`**:
+* Gemini API Key must be uploaded to colab secrets as `GEMINI_API_KEY`
+* `models/tierB_embedding_nn_binary.pt` needs to be uploaded to colab session storage.
+* In case there are errors in the `pip install` or `import` cells, restart the session and run again.
+* In case a line of code loading a file from Google drive, comment the line out and use `pd.read_csv(filename)`. Similarly in case of saving to Google Drive, use `<name>.to_csv()` instead.
 ---
-
-## 📈 Results Summary
-
-| Model | 3-Way Accuracy | Binary F1-Score |
-| --- | --- | --- |
-| Tier A (XGBoost) | ~XX% | ~XX% |
-| Tier B (FFNN) | ~XX% | ~XX% |
-| Tier C (DistilBERT) | ~XX% | ~XX% |
-
----
-
-## 📜 Citations
-
-* OpenAI: *New AI classifier for indicating AI-written text*.
-* Kaggle: *Human vs AI Text Dataset*.
-* Nature: *Transformers in Stylometry (2025)*.
-* *Full list of citations available in the LaTeX report.*
-
----
-
-**Author**: Shreyash Chandak
-
-**Affiliation**: IIIT Hyderabad
-
-**Contact**: [Your Email/Contact Info]
