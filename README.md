@@ -69,7 +69,7 @@ Each task is contained in a standalone Jupyter Notebook.
 5. **`task4.ipynb`**:
 * GPU recommended
 * Gemini API Key must be uploaded to colab secrets as `GEMINI_API_KEY`
-* `models/tierB_embedding_nn_binary.pt` needs to be uploaded to colab session storage.
+* `/models/tierC_transformer_tertiary/` needs to be uploaded to colab session storage. To upload the folder for, you might need to make a folder on colab first and then upload all the files inside that.
 * In case there are errors in the `pip install` or `import` cells, restart the session and run again.
 * In case a line of code is loading a file from Google drive, comment the line out and use `pd.read_csv(filename)`. Similarly in case of saving to Google Drive, use `<name>.to_csv()` instead.
 ---
