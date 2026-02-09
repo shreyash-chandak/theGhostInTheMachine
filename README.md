@@ -53,7 +53,7 @@ Each task is contained in a standalone Jupyter Notebook.
 3. **`task2_tertiary.ipynb`** and **`task2_binary.ipynb`**:
 * GPU recommended
 * The tertiary model classifies into Human/AI_Neutral/AI_Mimicked. The binary model does Human/AI
-* To run these, `/datasets/complete_dataset.csv` and `results/task1_results/task1_results.csv` needs to be uploaded to colab session storage. Additionally, `external_datasets/your_dataset_5000.csv` needs to be uploaded for an external test (not needed as per task requirements)
+* To run these, `/datasets/complete_dataset.csv` and `results/task1/task1_results.csv` needs to be uploaded to colab session storage. Additionally, `external_dataset/your_dataset_5000.csv` needs to be uploaded for an external test (not needed as per task requirements)
 * In case there are errors in the `pip install` or `import` cells, restart the session and run again.
 * In case a line of code is loading a file from Google drive, comment the line out and use `pd.read_csv(filename)`. Similarly in case of saving to Google Drive, use `<name>.to_csv()` instead.
 
@@ -62,7 +62,7 @@ Each task is contained in a standalone Jupyter Notebook.
 * Since the task document asks to analyse the best performing model, I made two notebooks since I found ffnn to be better for binary classification and distilbert to be better for three way.
 * `/datasets/complete_dataset.csv` has to be uploaded to colab session storage.
 * Both scripts require the model from task2 to be uploaded: `/models/tierC_transformer_tertiary/` and `models/tierB_embedding_nn_binary.pt` respectively. To upload the folder for tierC, you might need to make a folder on colab first and then upload all the files inside that.
-* `results/task2_results/task2_forensic_results_tertiary.csv` as well for `task3_tertiary.ipynb`.
+* `results/task2/task2_forensic_results_tertiary.csv` as well for `task3_tertiary.ipynb`.
 * In case there are errors in the `pip install` or `import` cells, restart the session and run again.
 * In case a line of code is loading a file from Google drive, comment the line out and use `pd.read_csv(filename)`. Similarly in case of saving to Google Drive, use `<name>.to_csv()` instead.
 
